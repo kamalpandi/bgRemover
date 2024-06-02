@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BgRemover ✂️</title>
+    <style>
+        body {
+            height: 100vh;
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .drop_zone {
+            border: 2px dashed #ccc;
+            padding: 20px;
+            width: 80vw;
+            height: 80vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+        .drop_zone.dragover {
+            background-color: #f0f0f0;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="drop_zone_id" class="drop_zone">
+        <h1>RMBG</h1>
+        <form action="/" method="post" id="upload_form_id" enctype="multipart/form-data">
+            <input id="file_input_id" type="file" name="file">
+            <input type="submit" value="rm">
+        </form>
+    </div>
+    <script>
+        let drag_zone = document.getElementById("drop_zone_id");
+        let file_input = document.getElementById("file_input_id");
+        let upload_form = document.getElementById("upload_form_id");
+
+        drag_zone.addEventListener("click", function () {
+            file_input.click();
+        });
+
+        file_input.addEventListener("change", function () {
+            if (file_input.files.length > 0) {
+                upload_form.submit();
+            }
+        });
+         // Prevent default behavior on dragover and add dragover class
+        drag_zone.addEventListener("dragover", function (e) {
+            e.preventDefault();
+            this.classList.add("dragover");
+        });
+
+        drag_zone.addEventListener("dragover", function (e) {
+            this.classList.add("dragover");
+        });
+
+        drag_zone.addEventListener("dragleave", function (e) {
+            this.classList.remove("dragover");
+        });
+
+        drag_zone.addEventListener("drop", function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            this.classList.remove("dragover");
+
+            let file = e.dataTransfer.files[0];
+            file_input.files = e.dataTransfer.files;
+            upload_form.submit();
+
+        });
+    </script>
+</body>
+
+</html>
